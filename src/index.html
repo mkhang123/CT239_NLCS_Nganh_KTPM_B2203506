@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <!-- Thiết lập mã hóa ký tự và viewport cho giao diện responsive -->
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- Chính sách bảo mật nội dung để tăng cường an toàn -->
+      <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none';">
+      <!-- Tiêu đề trang web -->
+      <title>Minimum Spanning Tree Algorithm</title>
+      <!-- Icon hiển thị trên thanh tiêu đề trình duyệt -->
+      <link rel="icon" href="assets/icon.ico" type="image/x-icon">
+      <!-- Liên kết đến file CSS chính -->
+      <link rel="stylesheet" href="style.css">
+      <!-- Liên kết đến thư viện Font Awesome để sử dụng icon -->
+      <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+  </head>
+  <body>
+    <header>
+        <!-- Phần tiêu đề của trang web -->
+        <h2>ỨNG DỤNG VẼ VÀ XỬ LÝ ĐỒ THỊ ÁP DỤNG GIẢI THUẬT TÌM CÂY KHUNG CÓ TRỌNG SỐ NHỎ NHẤT</h2>
+    </header>
+
+    <!-- Phần nội dung chính, bao gồm sidebar và khu vực hiển thị đồ thị -->
+    <div class="container">
+        <!-- Thanh sidebar chứa các công cụ điều khiển -->
+        <div class="sidebar">
+            <!-- Nhóm chọn chế độ thao tác với đồ thị -->
+            <div class="input-group">
+                <label><i class="fa-solid fa-gear"></i> Chế Độ:</label>
+                <select id="mode-select">
+                    <option value="default" selected hidden>Chọn chế độ</option>
+                    <option value="add-node">Thêm đỉnh</option>
+                    <option value="add-edge">Thêm cạnh</option>
+                    <option value="edit-edge">Chỉnh sửa đỉnh/cạnh</option>
+                    <option value="delete">Xóa đỉnh/cạnh</option>
+                    <option value="move">Di chuyển</option>
+                </select>
+            </div>
+
+            <!-- Nhóm chọn thuật toán tìm đường đi ngắn nhất -->
+            <div class="input-group">
+                <label><i class="fa-solid fa-calculator"></i> Thuật Toán:</label>
+                <select id="algorithm-select">
+                    <option value="default" selected hidden>Chọn thuật toán</option>
+                    <option value="kruskal">Kruskal</option>
+                    <option value="prim">Prim</option>
+                    
+                </select>
+            </div>
+  </body>
+</html>
