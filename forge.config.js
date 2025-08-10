@@ -2,6 +2,20 @@ const { FusesPlugin } = require('@electron-forge/plugin-fuses');
 const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 
 module.exports = {
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      config: {
+        repository: {
+          owner: 'mkhang123',
+          name: 'CT239_NLCS_Nganh_KTPM_B2203506'
+        },
+        prerelease: false,
+        draft: true
+      }
+    }
+  ],
+
   packagerConfig: {
     asar: true,
   },
