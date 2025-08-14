@@ -29,7 +29,6 @@ function kruskal(graph) {
             total += edge.w;
         }
     }
-
     return { mstEdges, total };
 }
 

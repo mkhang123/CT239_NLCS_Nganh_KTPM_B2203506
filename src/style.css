@@ -22,9 +22,8 @@ header {
     color: white;
     /* Khoảng cách bên trong và bo góc */
     padding: 1rem;
-    width: 100%;
-    margin-left: 0px;
-    /* border-radius: 5px; */
+    width: auto;
+    margin-left: 16px;
     /* Căn giữa nội dung */
     text-align: center;
 }

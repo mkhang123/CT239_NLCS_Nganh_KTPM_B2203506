@@ -23,7 +23,7 @@ class Graph {
         if (u > v) [u, v] = [v, u];
         if (!this.getVertexById(u) || !this.getVertexById(v)) return false;
         if (this.hasEdge(u, v)) return false;
-        this.edges.push(new Edge(u, v, w));
+        this.edges.push(new Edge(u, v, w)); //Trọng số được lưu ở đây
         return true;
     }
 
@@ -137,6 +137,27 @@ class Graph {
             }
         }
     }
+    createSubgraph(vertices) {
+    const subgraph = new Graph();
+
+    // Thêm đỉnh
+    vertices.forEach(v => {
+        const vertexData = this.vertices.find(vertex => vertex.id === v);
+        if (vertexData) {
+            subgraph.addVertex(vertexData.id, vertexData.label, vertexData.x, vertexData.y);
+        }
+    });
+
+    // Thêm cạnh
+    this.edges.forEach(edge => {
+        if (vertices.includes(edge.u) && vertices.includes(edge.v)) {
+            subgraph.addEdge(edge.u, edge.v, edge.w);
+        }
+    });
+
+    return subgraph;
+}
+
 }
 
 module.exports = Graph;

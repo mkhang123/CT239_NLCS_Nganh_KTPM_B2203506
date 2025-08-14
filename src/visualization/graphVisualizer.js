@@ -154,7 +154,7 @@ class GraphVisualizer {
         return { nodeData, edgeData };
     }
 
-    // Làm nổi bật đường đi ngắn nhất
+    // Làm nổi bật đường đi
     // @param {number[]} path - Mảng các ID đỉnh trên đường đi
     highlightPath(path) {
         this.clearHighlights();
