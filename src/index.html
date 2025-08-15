@@ -43,11 +43,7 @@
                         <p id="contentMessage"></p>
                     </div>
                 </div>
-            <!-- Nhóm chọn chế độ thao tác với đồ thị -->
-            <div class="input-group">
-                <!-- <label><i class="fa-solid fa-gear"></i> Chế Độ:</label> -->
-                <!-- <select id="mode-select" style="display: none;"></select> -->
-            </div>
+            <div class="input-group"></div>
 
             <!-- Nhóm chọn thuật toán tìm cây khung có trọng số nhỏ nhất -->
             <div class="input-group">
@@ -59,7 +55,7 @@
                 </select>
 
                 <!-- Chọn đỉnh bắt đầu (chỉ khi dùng Prim) -->
-                <label id="start-node-label" for="start-node-select"><i class="fa-solid fa-circle-nodes"></i> Đỉnh bắt đầu:</label>
+                <label id="start-node-label" for="start-node-select"><i class="fa-solid fa-circle-nodes" style="margin-top: 16px;"></i> Đỉnh bắt đầu:</label>
                 <select id="start-node-select">
                     <option value="default" selected hidden>Chọn đỉnh bắt đầu</option>
                     <!-- JS sẽ thêm các option từ danh sách đỉnh -->
@@ -71,33 +67,36 @@
                 <label><i class="fa-solid fa-bars"></i> Tiện Ích:</label>
                 <select id="options-select">
                     <option value="default" selected hidden>Chọn tiện ích</option>
-                    <option value="input-matrix">Nhập liệu đồ thị</option>
-                    <!-- <option value="view-result-matrix">Xem kết quả thuật toán</option> -->
                     <option value="dataStructure">Xem thông tin đồ thị</option>
                     <option value="auto-layout">Sắp xếp lại đồ thị</option>
                     <option value="export">Xuất file</option>
+                    <option value="import">Nhập file</option>
                     <option value="image">Xuất ảnh</option>
                 </select>
             </div>
 
             <!-- Nút chạy thuật toán đã chọn -->
             <button id="run-algorithm" class="btn btn-success">
-                <i class="fas fa-play"></i> <b>Chạy Thuật Toán</b>
+                <!-- <i class="fas fa-play"></i>  -->
+                <b>Chạy Thuật Toán</b>
             </button>
 
             <!-- Nút kiểm tra các thành phần liên thông của đồ thị -->
             <button id="check-component" class="btn btn-primary">
-                <i class="fas fa-link"></i> <b>Miền Liên Thông</b>
+                <!-- <i class="fa-brands fa-connectdevelop"></i> -->
+                <b> Miền Liên Thông</b>
             </button>
 
             <!-- Nút tạo đồ thị ngẫu nhiên -->
             <button id="random-graph" class="btn btn-warning">
-                <i class="fas fa-random"></i> <b>Đồ Thị Ngẫu Nhiên</b>
+                <!-- <i class="fa-solid fa-chart-diagram"></i> -->
+                <b>Đồ Thị Ngẫu Nhiên</b>
             </button>
 
             <!-- Nút xóa toàn bộ đồ thị -->
             <button id="clear-graph" class="btn btn-danger">
-                <i class="fas fa-trash"></i> <b>Xóa Đồ Thị</b>
+                <!-- <i class="fas fa-trash"></i> -->
+                <b>Xóa Đồ Thị</b>
             </button>
 
             <!-- Nhóm quản lý đồ thị (lưu, xóa đồ thị) -->
@@ -142,34 +141,7 @@
         </div>
     </div>
 
-    <!-- Modal nhập ma trận trọng số -->
-    <div id="matrixInputModal" class="modal">
-        <div class="modal-content">
-            <h3>Nhập ma trận trọng số</h3>
-            <p>Nhập ma trận trọng số (mỗi dòng là một hàng, các giá trị cách nhau bằng dấu cách). Sử dụng 'INF' cho
-                không có cạnh.</p>
-            <textarea id="matrixInput" rows="10" cols="50" placeholder="VD: 
-0 5 INF INF
-5 0 9 INF
-INF 9 0 3
-INF INF 3 0"></textarea>
-            <div>
-                <button id="matrixOk">OK</button>
-                <button id="matrixCancel">Cancel</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal hiển thị ma trận kết quả -->
-    <div id="resultMatrixModal" class="modal">
-        <div class="modal-content">
-            <h3>Ma trận khoảng cách</h3>
-            <pre id="resultMatrixOutput"></pre>
-            <div class="modal-footer">
-                <button id="resultMatrixOk">OK</button>
-            </div>
-        </div>
-    </div>
+    
 
     <!-- Modal nhập tên đồ thị khi lưu -->
     <div id="saveGraphModal" class="modal">

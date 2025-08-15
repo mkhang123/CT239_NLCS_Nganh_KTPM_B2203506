@@ -203,7 +203,7 @@ class GraphVisualizer {
             ))
             .classed('path-edge', true);
 
-        // === MỚI ===: Lấy danh sách đỉnh cần đánh dấu
+        // Lấy danh sách đỉnh cần đánh dấu
         const vertexIds = new Set();
         edgeList.forEach(e => {
             vertexIds.add(e.u);
@@ -219,6 +219,22 @@ class GraphVisualizer {
         this.labels.selectAll('.label')
             .filter(d => vertexIds.has(d.id))
             .classed('highlighted-label', true);
+    }
+
+    highlightComponents(components) {
+        this.clearHighlights();
+        // const colors = d3.schemeCategory10; // Màu có sẵn trong d3
+        const colors = ["#d62728", "#2ca02c", "#9467bd", "#ff7f0e",
+                "#8c564b", "#e377c2", "#7f7f7f", "#1f77b4", "#bcbd22", "#17becf"];
+        components.forEach((comp, idx) => {
+            const color = colors[idx % colors.length];
+            this.nodes.selectAll('.node')
+                .filter(d => comp.includes(d.id))
+                .attr('fill', color);
+            this.labels.selectAll('.label')
+                .filter(d => comp.includes(d.id))
+                .attr('fill', 'white');
+        });
     }
 }   
     

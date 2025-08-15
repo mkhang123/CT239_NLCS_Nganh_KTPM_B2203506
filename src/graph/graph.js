@@ -100,63 +100,26 @@ class Graph {
         return g;
     }
 
-    fromAdjacencyMatrix(matrixText, canvasWidth, canvasHeight) {
-        this.vertices = [];
-        this.edges = [];
-
-        const lines = matrixText.trim().split('\n').map(line => line.trim());
-        const n = lines.length;
-        if (n === 0) throw new Error('Ma trận rỗng.');
-
-        for (let i = 0; i < n; i++) {
-            const row = lines[i].split(/\s+/);
-            if (row.length !== n) throw new Error('Ma trận không vuông.');
-        }
-
-        const gridSize = Math.ceil(Math.sqrt(n));
-        const cellWidth = canvasWidth / (gridSize + 1);
-        const cellHeight = canvasHeight / (gridSize + 1);
-
-        for (let i = 0; i < n; i++) {
-            const id = i + 1;
-            const label = String.fromCharCode(65 + i);
-            const row = Math.floor(i / gridSize);
-            const col = i % gridSize;
-            const x = (col + 1) * cellWidth;
-            const y = (row + 1) * cellHeight;
-            this.addVertex(id, label, x, y);
-        }
-
-        for (let i = 0; i < n; i++) {
-            const row = lines[i].split(/\s+/);
-            for (let j = i + 1; j < n; j++) {
-                const weight = row[j].toUpperCase() === 'INF' ? Infinity : parseFloat(row[j]);
-                if (!isNaN(weight) && weight !== Infinity && weight !== 0) {
-                    this.addEdge(i + 1, j + 1, weight);
-                }
-            }
-        }
-    }
     createSubgraph(vertices) {
-    const subgraph = new Graph();
+        const subgraph = new Graph();
 
-    // Thêm đỉnh
-    vertices.forEach(v => {
-        const vertexData = this.vertices.find(vertex => vertex.id === v);
-        if (vertexData) {
-            subgraph.addVertex(vertexData.id, vertexData.label, vertexData.x, vertexData.y);
-        }
-    });
+        // Thêm đỉnh
+        vertices.forEach(v => {
+            const vertexData = this.vertices.find(vertex => vertex.id === v);
+            if (vertexData) {
+                subgraph.addVertex(vertexData.id, vertexData.label, vertexData.x, vertexData.y);
+            }
+        });
 
-    // Thêm cạnh
-    this.edges.forEach(edge => {
-        if (vertices.includes(edge.u) && vertices.includes(edge.v)) {
-            subgraph.addEdge(edge.u, edge.v, edge.w);
-        }
-    });
+        // Thêm cạnh
+        this.edges.forEach(edge => {
+            if (vertices.includes(edge.u) && vertices.includes(edge.v)) {
+                subgraph.addEdge(edge.u, edge.v, edge.w);
+            }
+        });
 
-    return subgraph;
-}
+        return subgraph;
+    }
 
 }
 

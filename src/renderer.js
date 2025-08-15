@@ -9,7 +9,6 @@ const dfs = require('./algorithms/dfs.js');
 let selectedNodeId = null;
 let selectedEdge = null;
 
-
 /* === Khởi tạo biến toàn cục === */
 // Lấy container canvas và kích thước
 const canvasContainer = document.querySelector('.canvas-container');
@@ -46,11 +45,10 @@ function showMessage(message) {
 }
 
 /**
- * Cập nhật danh sách các đỉnh trong dropdown chọn đỉnh đầu và cuối
+ * Cập nhật danh sách các đỉnh trong dropdown chọn đỉnh đầu
  */
 function updateNodeDropdowns(algorithm = 'default') {
     startNodeSelect.innerHTML = '<option value="default" selected hidden>Chọn đỉnh đầu</option>';
-
     const vertices = graph.getVertices();
     vertices.forEach(id => {
         const label = graph.getVertexLabel(id);
@@ -58,7 +56,6 @@ function updateNodeDropdowns(algorithm = 'default') {
         option.value = id;
         option.textContent = label;
         startNodeSelect.appendChild(option);
-
     });
 
     // Ẩn hoặc hiển thị tùy thuật toán
@@ -91,7 +88,7 @@ function generateVertexId(index) {
 }
 
 /**
- * Tự động bố trí đồ thị theo lưới
+ * Tự động bố trí sắp xếp theo lưới
  */
 function autoLayoutGraph() {
     const vertices = graph.getVertices();
@@ -111,7 +108,7 @@ function autoLayoutGraph() {
     });
 
     visualizer.updateGraph(graph);
-    showMessage('Đã tự động bố trí đồ thị.');
+    showMessage('Đã tự động sắp xếp đồ thị.');
 }
 
 /* === Hàm quản lý đồ thị === */
@@ -130,7 +127,7 @@ function saveGraphToStorage(name, graph) {
 }
 
 /**
- * Tải danh sách đồ thị từ localStorage và cập nhật dropdown
+ * Tải danh sách đồ thị từ localStorage
  */
 function loadGraphList() {
     const graphList = document.getElementById('graph-list');
@@ -158,14 +155,14 @@ function loadGraphFromStorage(graphId) {
         visualizer.updateGraph(graph);
         attachNodeAndEdgeEvents();
         currentGraphId = graphId;
-        showMessage(`Đã tải đồ thị: ${graphs[graphId].name}`);
+        showMessage(`Đã tải đồ thị: ${graphs[graphId].name} từ localStorage.`);
     } else {
         showMessage('Không tìm thấy đồ thị.');
     }
 }
 
 /**
- * Xóa đồ thị khỏi localStorage
+ * Hàm để xóa đồ thị khỏi localStorage
  * @param {string} graphId - ID của đồ thị
  */
 function deleteGraphFromStorage(graphId) {
@@ -208,47 +205,6 @@ function showSaveGraphModal() {
             resolve(null);
         };
     });
-}
-
-/**
- * Hiển thị modal để nhập ma trận trọng số
- * @returns {Promise<string|null>} - Ma trận trọng số hoặc null nếu hủy
- */
-function showMatrixInputModal() {
-    return new Promise((resolve) => {
-        const matrixInputModal = document.getElementById('matrixInputModal');
-        const matrixInput = document.getElementById('matrixInput');
-        const matrixOk = document.getElementById('matrixOk');
-        const matrixCancel = document.getElementById('matrixCancel');
-
-        matrixInputModal.style.display = 'block';
-        matrixInput.value = '';
-        matrixOk.onclick = () => {
-            const matrixText = matrixInput.value.trim();
-            matrixInputModal.style.display = 'none';
-            resolve(matrixText);
-        };
-        matrixCancel.onclick = () => {
-            matrixInputModal.style.display = 'none';
-            resolve(null);
-        };
-    });
-}
-
-/**
- * Hiển thị modal để xem ma trận kết quả
- * @param {string} matrixText - Nội dung ma trận
- */
-function showResultMatrixModal(matrixText) {
-    const resultMatrixModal = document.getElementById('resultMatrixModal');
-    const resultMatrixOutput = document.getElementById('resultMatrixOutput');
-    const resultMatrixOk = document.getElementById('resultMatrixOk');
-
-    resultMatrixModal.style.display = 'block';
-    resultMatrixOutput.textContent = matrixText;
-    resultMatrixOk.onclick = () => {
-        resultMatrixModal.style.display = 'none';
-    };
 }
 
 /* === Hàm xử lý sự kiện === */
@@ -313,9 +269,8 @@ function attachNodeAndEdgeEvents() {
         });
     };
 
-    //Các hàm sự kiện như tạo đỉnh, tạo khung...
+    //Các hàm sự kiện như tạo đỉnh (thêm đỉnh), tạo khung...
     const svg = d3.select('#graph-canvas');
-
     svg.on('dblclick', function (event) {
         let [x, y] = d3.pointer(event).map(Math.round);
         const minDistance = 80; // ngưỡng tối thiểu để không thêm trùng
@@ -333,7 +288,6 @@ function attachNodeAndEdgeEvents() {
             showMessage('Khoảng cách quá gần đỉnh khác. Không thể thêm đỉnh tại vị trí này.');
             return;
         }
-
         //Tạo đỉnh
         const id = graph.getVertices().length + 1;
         const label = generateVertexId(id - 1);
@@ -348,6 +302,7 @@ function attachNodeAndEdgeEvents() {
         }
     });
 
+    //Hàm gắn sự kiện đỉnh và cạnh
     function attachNodeAndEdgeEvents() {
         visualizer.nodes.selectAll('.node')
             .on('click', async function (event, d) {
@@ -391,6 +346,7 @@ function attachNodeAndEdgeEvents() {
                     }
                 }
             })
+            //Chỉnh sửa nhãn đỉnh
             .on('dblclick', async function (event, d) {
                 event.stopPropagation();
                 const currentLabel = graph.getVertexLabel(d.id);
@@ -429,7 +385,7 @@ function attachNodeAndEdgeEvents() {
                 visualizer.updateGraph(graph);
                 attachNodeAndEdgeEvents();
                 showMessage(`Đã xóa đỉnh ${label}.`);
-            } else if (selectedEdge !== null) {
+            } else if (selectedEdge !== null) { //Xóa cạnh
                 const u = selectedEdge.source;
                 const v = selectedEdge.target;
                 const labelU = graph.getVertexLabel(u);
@@ -447,6 +403,7 @@ function attachNodeAndEdgeEvents() {
     document.addEventListener('contextmenu', async (event) => {
         // Ngăn menu mặc định hiện ra
         event.preventDefault();
+
         if (selectedEdge !== null) {
             const u = selectedEdge.source;
             const v = selectedEdge.target;
@@ -470,7 +427,7 @@ function attachNodeAndEdgeEvents() {
     const moveCanvas = visualizer.svg;
     moveCanvas.call(d3.drag()
         .on('start', function (event) {
-            // Không cho kéo nếu click trúng đỉnh (node)
+            // Không cho kéo nếu click trúng đỉnh
             const isOnNode = event.sourceEvent.target.closest('.node');
             if (isOnNode) return;
             d3.select(this).style('cursor', 'grabbing');
@@ -557,7 +514,7 @@ runAlgorithmButton.addEventListener('click', () => {
                 const result = kruskal(graph);
                 const { count, components } = dfs(graph);
                 if (count !== 1) {
-                    // Đồ thị không liên thông → chạy Kruskal trên từng miền
+                    // Đồ thị không liên thông - chạy Kruskal trên từng miền
                     let allMstEdges = [];
                     let messages = [];
 
@@ -596,7 +553,7 @@ runAlgorithmButton.addEventListener('click', () => {
                 return;
         }
     } catch (error) {
-        console.error('Error running algorithm:', error);
+        console.error('Không chạy được thuật toán:', error);
         showMessage(`Lỗi: ${error.message}`);
         visualizer.clearHighlights();
     }
@@ -611,7 +568,7 @@ checkComponentButton.addEventListener('click', () => {
         ).join('\n');
 
     showMessage(message);
-    visualizer.clearHighlights();
+    visualizer.highlightComponents(components);
 });
 
 // Tạo đồ thị ngẫu nhiên
@@ -654,7 +611,7 @@ randomGraphButton.addEventListener('click', () => {
     showMessage(`Đồ thị ngẫu nhiên đã được tạo: ${numVertices} đỉnh, ${numEdges} cạnh.`);
 });
 
-// Xóa đồ thị
+// Xóa đồ thị đang trên canvas
 clearGraphButton.addEventListener('click', () => {
     if (graph.vertices.length === 0 && graph.edges.length === 0) {
         return;
@@ -672,13 +629,25 @@ clearGraphButton.addEventListener('click', () => {
 
 // Xử lý các tiện ích
 optionsSelect.addEventListener('change', async (event) => {
-    const option = event.target.value;
-    let matrixText = '';
+    const option = event.target.value;  
 
     switch (option) {
         case 'export':
             const saveSuccess = await saveGraphToFile(graph);
             showMessage(saveSuccess ? 'Đồ thị đã được xuất thành file JSON.' : 'Xuất file thất bại.');
+            break;
+        case 'import':
+            const loadedGraphData = await loadGraphFromFile();
+            if (loadedGraphData) {
+                const loadedGraph = Graph.fromJSON(loadedGraphData);
+                graph.vertices = loadedGraph.vertices;
+                graph.edges = loadedGraph.edges;
+                visualizer.updateGraph(graph);
+                attachNodeAndEdgeEvents();
+                showMessage('Đồ thị đã được nhập từ file JSON.');
+            } else {
+                showMessage('Nhập file thất bại hoặc bị hủy.');
+            }
             break;
         case 'image':
             const svg = document.querySelector('#graph-canvas');
@@ -705,22 +674,7 @@ optionsSelect.addEventListener('change', async (event) => {
                 `Cạnh:\n${graphData.edges.map(e => `(${graph.getVertexLabel(e.u)} - ${graph.getVertexLabel(e.v)}, ${e.w})`).join('\n')}`;
             showMessage(message);
             break;
-        case 'input-matrix':
-            matrixText = await showMatrixInputModal();
-            if (matrixText) {
-                try {
-                    graph.fromAdjacencyMatrix(matrixText, canvasWidth, canvasHeight);
-                    visualizer.updateGraph(graph);
-                    attachNodeAndEdgeEvents();
-                    showMessage('Đồ thị đã được tạo từ ma trận trọng số.');
-                } catch (error) {
-                    showMessage(`Lỗi: ${error.message}`);
-                }
-            } else {
-                showMessage('Hủy nhập ma trận.');
-            }
-            break;
-        case 'auto-layout':
+        case 'auto-layout': //Sắp xếp lại đồ thị
             autoLayoutGraph();
             break;
     }
@@ -758,12 +712,10 @@ document.getElementById('save-graph').addEventListener('click', async () => {
         graphList.value = 'default';
         showMessage(`Đồ thị "${graphName}" đã được xóa.`);
     });
-
     document.getElementById('graph-list').addEventListener('change', (event) => {
         const graphId = event.target.value;
         if (graphId !== 'default') {
             loadGraphFromStorage(graphId);
-            showMessage(`Đã chọn đồ thị. Nhấn "Xóa Đồ Thị" để xóa hoặc tiếp tục chỉnh sửa.`);
         }
     });
 
